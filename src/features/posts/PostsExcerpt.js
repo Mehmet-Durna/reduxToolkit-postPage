@@ -2,8 +2,16 @@ import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
 import ReactionButtons from "./ReactionButtons";
 import { Link } from 'react-router-dom';
+import { useGetPostsQuery } from './postsSlice';
 
-const PostsExcerpt = ({ post }) => {
+const PostsExcerpt = ({ postId }) => {
+
+    const { post } = useGetPostsQuery('getPosts', {
+        selectFromResult: ({ data }) => ({
+            post: data?.entities[postId]
+        }),
+    })
+
     return (
         <article>
             <h2>{post.title}</h2>
@@ -17,4 +25,5 @@ const PostsExcerpt = ({ post }) => {
         </article>
     )
 }
+
 export default PostsExcerpt
